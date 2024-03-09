@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nestjs:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - '3000:3000'
+    volumes:
+      - volume-task:/task/api/volumes/api
+    networks:
+      - network-task
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - '27017:27017'
+    volumes:
+      - volume-task:/task/api/volumes/database
+    networks:
+      - network-task
+
+networks:
+  network-task:
+    driver: bridge
+
+volumes:
+  volume-task:
