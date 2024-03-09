@@ -27,6 +27,18 @@ services:
     networks:
       - network-task
 
+  nextjs:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    ports:
+      - '3030:3030'
+    volumes:
+      - volume-task:/task/api/volumes/api
+    networks:
+      - network-task
+
 networks:
   network-task:
     driver: bridge
