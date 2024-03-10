@@ -6,7 +6,7 @@ The application is containerized using Docker for seamless deployment and execut
 ## Setup
 ### Before initiating the project, ensure the following steps are completed:
 #### 1. Configure Environment Variables
-Create a .env file in the "./api/" folder where the "package.json" file is located, and populate it with the following variables:
+Create a ".env" file in the "./api/" folder where the "package.json" file is located, and populate it with the following variables:
 ```bash
 PORT=3000
 CONNECTION_STRING=mongodb://admin:password@localhost:27017
@@ -14,6 +14,11 @@ AWS_ACCESS_KEY_ID=[YOUR AWS ACCESS KEY]
 AWS_SECRET_ACCESS_KEY=[YOUR AWS SECRET ACCESS KEY]
 AWS_REGION=[YOUR AWS REGION]
 AWS_BUCKET_NAME=[YOUR AWS S3 BUCKET NAME]
+```
+Create a ".env.local" file in the "./front/" folder where the "package.json" file is located, and populate it with the following variables:
+```bash
+PORT=3000
+NEXT_PUBLIC_API_URL=http://[YOUR IPv4 Address]:3000
 ```
 
 #### 2. Docker Installation

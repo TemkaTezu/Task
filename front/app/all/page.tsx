@@ -8,12 +8,16 @@ export default function All() {
     const [users, SetUsers] = useState<User[]>();
 
     async function GetAllUsers() {
-        const response = await fetch("http://127.0.0.1:3000/api/user/all", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/all`, {
             method: 'GET',
             headers: {
+                'Access-Control-Allow-Credentials': "true",
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,DELETE,PATCH,POST,PUT',
+                'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
                 'Content-Type': 'application/json',
                 'Cache-Control': 'no-store',
-            },
+              },
         });
 
         return await response.json();

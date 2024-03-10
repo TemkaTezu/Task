@@ -32,8 +32,14 @@ export default function Home() {
       formData.append('ciImage', ciImage);
     }
 
-    const response = await fetch('http://127.0.0.1:3000/api/user', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
       method: 'POST',
+      headers: {
+        'Access-Control-Allow-Credentials': "true",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,DELETE,PATCH,POST,PUT',
+        'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+      },
       body: formData,
     });
 
