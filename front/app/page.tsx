@@ -7,9 +7,10 @@ export default function Home() {
   const [registrationNumber, setRegistrationNumber] = useState<string>("");
   const [ciImage, setCIImage] = useState<File | null>(null);
   const [userImage, setUserImage] = useState<File | null>(null);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => { document.title = "Шинээр хэрэглэгч үүсгэх"; }, []);
 
@@ -17,6 +18,7 @@ export default function Home() {
     e.preventDefault();
 
     if (!registrationNumber || !userImage || !ciImage) {
+      setLoading(false);
       setTitle('Алдаа');
       setMessage('Та мэдээллээ бүрэн оруулан уу');
       onOpen();
@@ -32,6 +34,11 @@ export default function Home() {
       formData.append('ciImage', ciImage);
     }
 
+    setLoading(true);
+    setTitle('Уншиж байна');
+    setMessage('Та түр хүлээн үү');
+    onOpen();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
       method: 'POST',
       headers: {
@@ -43,14 +50,18 @@ export default function Home() {
       body: formData,
     });
 
+    onClose();
+
     const data = JSON.parse(await response.text());
 
     if (data.message !== 'OK') {
+      setLoading(false);
       setTitle('Алдаа');
       setMessage(data.message);
       onOpen();
     }
     else {
+      setLoading(false);
       setTitle('Бүртгэл');
       setMessage('Амжилттай бүртгэгдлээ')
       onOpen();
@@ -133,9 +144,7 @@ export default function Home() {
                 <p>{message}</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
+                {loading === false ? (<Button color="danger" variant="light" onPress={onClose}>Close</Button>) : null}
               </ModalFooter>
             </>
           )}
