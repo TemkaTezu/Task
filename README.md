@@ -18,7 +18,7 @@ AWS_BUCKET_NAME=[YOUR AWS S3 BUCKET NAME]
 Create a ".env.local" file in the "./front/" folder where the "package.json" file is located, and populate it with the following variables:
 ```bash
 PORT=3000
-NEXT_PUBLIC_API_URL=http://[YOUR IPv4 Address]:3000
+NEXT_PUBLIC_API_URL=http://[YOUR IPv4 Address]
 ```
 
 #### 2. Docker Installation
